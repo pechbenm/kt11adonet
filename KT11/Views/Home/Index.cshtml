@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Главная";
+}
+
+<div class="text-center py-4">
+    <h1 class="display-5">Шифрование данных в ASP.NET Core</h1>
+    <p class="lead text-muted">Bouncy Castle и libsodium: ввод текста, шифрование и расшифровка в браузере</p>
+</div>
+
+<div class="row g-4 justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card h-100">
+            <div class="card-body d-flex flex-column">
+                <h2 class="h5 card-title">Bouncy Castle</h2>
+                <p class="card-text text-muted">Шифрование и расшифровка текста алгоритмом AES-256-GCM с помощью библиотеки BouncyCastle.Cryptography.</p>
+                <a class="btn btn-primary mt-auto align-self-start" asp-controller="BouncyCastle" asp-action="Index">Открыть</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-5">
+        <div class="card h-100">
+            <div class="card-body d-flex flex-column">
+                <h2 class="h5 card-title">Libsodium</h2>
+                <p class="card-text text-muted">Шифрование и расшифровка текста с помощью libsodium (пакет Sodium.Core): XSalsa20-Poly1305.</p>
+                <a class="btn btn-primary mt-auto align-self-start" asp-controller="Libsodium" asp-action="Index">Открыть</a>
+            </div>
+        </div>
+    </div>
+</div>
