@@ -1,4 +1,4 @@
-<img width="1816" height="913" alt="image" src="https://github.com/user-attachments/assets/cbf1f824-f907-4536-9988-e80dc9f88f6e" />KT11 по adonet
+KT11 по adonet
 
 Задание 1. Bouncy Castle
 
