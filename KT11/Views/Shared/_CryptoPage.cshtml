@@ -1,0 +1,95 @@
+﻿@model CryptoViewModel
+
+<div class="py-3">
+    <h1 class="h3 mb-1">@Model.Title</h1>
+    <p class="text-muted mb-2">@Model.Algorithm</p>
+    <p class="small text-muted">@Model.FormatNote</p>
+
+    <div class="alert alert-warning small" role="alert">
+        Учебное приложение: ключ и текст передаются на сервер в открытом виде.
+        Не используйте его для реальных секретов.
+    </div>
+
+    <div class="row g-4">
+        @*шифрование*@
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header fw-semibold">Шифрование</div>
+                <div class="card-body">
+                    <form asp-action="Encrypt" method="post">
+                        <div class="mb-3">
+                            <label asp-for="Encrypt.PlainText" class="form-label">Текст для шифрования</label>
+                            <textarea asp-for="Encrypt.PlainText" class="form-control" rows="5" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Encrypt.Key" class="form-label">Ключ (Base64, 32 байта) — необязательно</label>
+                            <input asp-for="Encrypt.Key" class="form-control font-monospace" autocomplete="off"
+                                   placeholder="Оставьте пустым — будет создан случайный ключ" />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Зашифровать</button>
+                    </form>
+
+                    @if (!string.IsNullOrEmpty(Model.EncryptError))
+                    {
+                        <div class="alert alert-danger mt-3 mb-0" role="alert">@Model.EncryptError</div>
+                    }
+
+                    @if (Model.EncryptedText is not null)
+                    {
+                        <div class="mt-3">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <strong>Зашифрованный текст (Base64)</strong>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-copy="encrypted-text">Копировать</button>
+                            </div>
+                            <div id="encrypted-text" class="result-box">@Model.EncryptedText</div>
+                        </div>
+                        <div class="mt-3">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <strong>@(Model.KeyWasGenerated ? "Сгенерированный ключ" : "Использованный ключ")</strong>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-copy="used-key">Копировать</button>
+                            </div>
+                            <div id="used-key" class="result-box">@Model.UsedKey</div>
+                            <div class="form-text">Сохраните ключ: без него расшифровать данные невозможно. Форма справа уже заполнена.</div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        @* ===================== Расшифровка ===================== *@
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header fw-semibold">Расшифровка</div>
+                <div class="card-body">
+                    <form asp-action="Decrypt" method="post">
+                        <div class="mb-3">
+                            <label asp-for="Decrypt.CipherText" class="form-label">Зашифрованный текст (Base64)</label>
+                            <textarea asp-for="Decrypt.CipherText" class="form-control font-monospace" rows="5" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Decrypt.Key" class="form-label">Ключ (Base64)</label>
+                            <input asp-for="Decrypt.Key" class="form-control font-monospace" autocomplete="off" required />
+                        </div>
+                        <button type="submit" class="btn btn-success">Расшифровать</button>
+                    </form>
+
+                    @if (!string.IsNullOrEmpty(Model.DecryptError))
+                    {
+                        <div class="alert alert-danger mt-3 mb-0" role="alert">@Model.DecryptError</div>
+                    }
+
+                    @if (Model.DecryptedText is not null)
+                    {
+                        <div class="mt-3">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <strong>Расшифрованный текст</strong>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-copy="decrypted-text">Копировать</button>
+                            </div>
+                            <div id="decrypted-text" class="result-box">@Model.DecryptedText</div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
